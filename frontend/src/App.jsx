@@ -14,7 +14,7 @@ function App() {
     setToken(t)
   },[])
 
-  const url = 'http://localhost:4000'
+  const url = 'https://thwork-assignment.onrender.com'
   return (
    <AppContext.Provider value={{
     token: token, url: url

@@ -90,7 +90,7 @@ export default function Home() {
    return (
       <div className="">
          <Navbar />
-         <div className="w-full min-h-screen flex flex-col py-6 gap-3 bg-neutral-100">
+         <div className="w-full min-h-[90vh] flex flex-col py-6 gap-3 bg-neutral-100">
             <div className="w-[85%] flex flex-col gap-3 mx-auto rounded bg-white py-3 px-4">
                <div className="flex items-center gap-2">
                   <MdInsights className="w-4 h-4 text-blue-500" />
