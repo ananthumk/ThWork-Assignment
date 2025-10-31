@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken'
 const register = async(req, res) => {
     try {
         const {name, email, password} = req.body 
+        
 
         if(!name || !email || !password){
             return res.status(401).json({message: 'All fields are required'})
@@ -30,6 +31,7 @@ const register = async(req, res) => {
 const login = async(req, res) => {
     try {
         const {email, password} = req.body 
+        console.log(email, password)
         
         if(!email || !password){
             return res.status(401).json({message: "Eamil and Password is required"})

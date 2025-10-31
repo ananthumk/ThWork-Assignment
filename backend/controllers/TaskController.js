@@ -8,11 +8,11 @@ const addTask = async (req, res) => {
             return res.status(401).json({ message: 'All fields are required' })
         }
 
-        if (status !== 'Open' || status !== 'In Progress' || status !== 'Done') {
+        if (status !== 'Open' && status !== 'In Progress' && status !== 'Done') {
             return res.status(401).json({ message: "Invalid value for status. It should be Open, In Progress and Done" })
         }
 
-        if (priority !== 'Low' || priority !== 'Medium' || priority !== 'High') {
+        if (priority !== 'Low' && priority !== 'Medium' && priority !== 'High') {
             return res.status(401).json({ message: 'Invalid value for priority. It should be Low, Medium and High' })
         }
 
@@ -49,7 +49,25 @@ const getTask = async (req, res) => {
         return res.status(200).json({ task })
     } catch (error) {
         console.log('Get Tasks:', error.message)
-        return res.status(500).json({ message: 'Internal Server Error', error: error, message })
+        return res.status(500).json({ message: 'Internal Server Error', error: error.message })
+    }
+}
+
+const getTaskById = async (req, res) => {
+    try {
+        
+
+        const {id} = req.params
+
+
+        const task = await Task.find({
+            _id: id}
+        )
+
+        return res.status(200).json({ task })
+    } catch (error) {
+        console.log('Get Tasks:', error.message)
+        return res.status(500).json({ message: 'Internal Server Error', error: error.message })
     }
 }
 
@@ -72,7 +90,7 @@ const updateTask = async (req, res) => {
         return res.status(200).json({ message: 'Updated Successfully', task: updatedTask })
     } catch (error) {
         console.log('Error at update task: ', error.message)
-        return res.status(500).json({ message: 'Internal Server Error', error: error, message })
+        return res.status(500).json({ message: 'Internal Server Error', error: error.message })
     }
 }
 
@@ -81,7 +99,7 @@ const getSummary = async (req, res) => {
         const tasks = await Task.find({user: req.user.userId})
         const totalTasks = tasks.length
 
-        const openTaskList = tasks.filter(t => t.status === 'Open')
+        const openTaskList = tasks.filter(task => task.status === 'Open')
         const openTasks = openTaskList.length
 
         let taskByPriority = {
@@ -89,7 +107,8 @@ const getSummary = async (req, res) => {
         }
         openTaskList.forEach(task => {
             if (task.priority in taskByPriority) {
-                taskByPriority[task.priority]++
+                console.log('summaery',task)
+                taskByPriority[task.priority] += 1
             }
         });
 
@@ -98,7 +117,8 @@ const getSummary = async (req, res) => {
         threeDaysLater.setDate(now.getDate() + 3)
 
         const dueSoonCount = openTaskList.filter(task => {
-            return task.dueDate >= now && task.dueDate <= threeDaysLater
+            const dueDate = new Date(task.dueDate)
+            return dueDate >= now && dueDate <= threeDaysLater
         }).length
 
         const dueDateCount = {}
@@ -110,7 +130,7 @@ const getSummary = async (req, res) => {
         let busiestDay = null
         let maxCount = 0
         for (const day in dueDateCount) {
-            if (dueDateCount[day] > count) {
+            if (dueDateCount[day] > maxCount) {
                 maxCount = dueDateCount[day]
                 busiestDay = day
             }
@@ -125,7 +145,7 @@ const getSummary = async (req, res) => {
             }
         }
 
-        const summary = `You have ${openTasks} open tasks. Most are ${dominantPriority} priority and ${dueSoonCount}`
+        const summary = `You have ${openTasks} open tasks. Most are ${dominantPriority} priority and ${dueSoonCount} are due soon`
         return res.status(200).json({
             totalTasks,
             openTasks,
@@ -140,4 +160,4 @@ const getSummary = async (req, res) => {
     }
 }
 
-export { addTask, getTask, updateTask, getSummary }
+export { addTask, getTask, getTaskById, updateTask, getSummary }

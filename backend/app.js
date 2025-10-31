@@ -2,14 +2,12 @@ const express = require('express')
 const app = express()
 
 const cors = require('cors')
-const bodyParser = require('body-parser')
 const { default: mongoose } = require('mongoose')
 const router = require('./routes/TaskRoutes')
 
 require('dotenv').config()
 
 app.use(cors())
-
 app.use(express.json())
 
 const connectDb = async () => {
