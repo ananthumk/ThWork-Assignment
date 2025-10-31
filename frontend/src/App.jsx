@@ -4,7 +4,7 @@ import Task from './component/Task'
 import AppContext from './context/AppContext'
 import Home from './pages/Home'
 import LoginForm from './pages/LoginForm'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import EditTask from './component/EditTask'
 import ProtectedRoute from './component/ProtectedRoute'
 import NotFound from './pages/NotFound'
@@ -19,9 +19,9 @@ function App() {
   const updateToken = (newToken) => {
     setToken(newToken)
     if(newToken){
-      localStorage.getItem('token', newToken)
+      localStorage.setItem('token', newToken)
     } else {
-      localStorage.remove('token')
+      localStorage.removeItem('token')
     }
   }
 
@@ -37,6 +37,7 @@ function App() {
         <Route path="/task" element={<ProtectedRoute element={<Task />} />} />
         <Route path='/edit/:id' element={<ProtectedRoute element={<EditTask />} />} />
         <Route path='/not-found' element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/not-found" replace />} />
       </Routes>
    </AppContext.Provider>
   )
