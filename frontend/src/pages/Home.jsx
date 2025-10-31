@@ -5,6 +5,7 @@ import { MdInsights } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../context/AppContext";
 import TaskCard from "../component/TaskCard";
+import { Oval } from 'react-loader-spinner'
 
 export default function Home() {
    const navigate = useNavigate()
@@ -112,7 +113,7 @@ export default function Home() {
                   </div>
                   <div className="flex flex-col items-center gap-2">
                      <h3 className="text-lg text-orange-500 font-bold">
-                        {insightData?.taskByPriority?.high || 0}
+                        {insightData?.taskByPriority?.High || 0}
                      </h3>
                      <p className="text-[12px]">High Priority</p>
                   </div>
@@ -126,6 +127,7 @@ export default function Home() {
                <div className="w-full py-2 px-5 rounded bg-blue-100">
                   <p className="text-[13px] font-normal">{insightData?.summary}</p>
                </div>
+               <p className="text-[13px] p-1">{`Busiest Day: ${insightData?.busiestDay}`}</p>
             </div>
             <div className="w-[85%] flex items-center gap-2 flex-wrap sm:gap-5 mx-auto rounded bg-white py-3 px-5">
                <div className="flex flex-col gap-1">
@@ -147,14 +149,26 @@ export default function Home() {
                   </select>
                </div>
             </div>
-            <div className="w-[85%] mx-auto">
-               <p className="text-[15px] sm:text-[19px] text-black">Tasks</p>
-               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 flex-wrap gap-5 mt-3">
-                  {taskData?.map(task => (
-                     <TaskCard task={task} />
-                  ))}
-               </div>
-            </div>
+            {taskData.length === 0 ? <div className="w-full flex justify-center items-center mt-20">
+               <Oval
+                  height={50}
+                  width={50}
+                  color="#4fa94d"
+                  visible={true}
+                  ariaLabel="oval-loading"
+                  secondaryColor="#4fa94d"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+               />
+            </div> :
+               <div className="w-[85%] mx-auto">
+                  <p className="text-[15px] sm:text-[19px] text-black">Tasks</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 flex-wrap gap-5 mt-3">
+                     {taskData?.map(task => (
+                        <TaskCard task={task} />
+                     ))}
+                  </div>
+               </div>}
             <div onClick={() => { navigate('/task') }} style={{ zIndex: 1000 }} className="w-10 h-10 cursor-pointer fixed bottom-3 md:bottom-10 right-3 md:right-12 flex justify-center items-center rounded-full bg-blue-800">
                <RiAddLargeFill className="w-5 h-5 text-white" />
             </div>

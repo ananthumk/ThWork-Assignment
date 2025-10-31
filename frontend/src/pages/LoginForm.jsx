@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import image from '../assets/taskLogin.jpg'
 import taskLogo from '../assets/taskLogo.PNG'
 import { useNavigate } from 'react-router-dom'
@@ -11,6 +11,8 @@ export default function LoginForm() {
     const [userInfo, setUserInfo] = useState({
         name: '', email: '', password: ''
     })
+    
+    
 
     const handleToggle = () => {
         setLogin(prev => !prev)
@@ -25,7 +27,14 @@ export default function LoginForm() {
         }))
     }
 
-    const { url } = useContext(AppContext)
+    const { url, token, updateToken } = useContext(AppContext)
+
+    useEffect(() => {
+        if(token){
+            navigate('/')
+        }
+    }, [token])
+
     const navigate = useNavigate()
     const submitForm = (e) => {
         e.preventDefault()
@@ -44,6 +53,7 @@ export default function LoginForm() {
                 const response = await fetch(urlString, options)
                 const data = await response.json()
                 if (response.ok) {
+                    updateToken(data.token)
                     localStorage.setItem('token', data.token)
                     setUserInfo({ name: '', email: '', message: '' })
                     navigate('/')

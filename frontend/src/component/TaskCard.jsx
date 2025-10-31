@@ -1,12 +1,14 @@
 import { FaCalendarAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { RiEdit2Fill } from "react-icons/ri";
 
 
 export default function TaskCard({task}){
     const navigate = useNavigate()
     return(
         <div onClick={() => navigate(`/edit/${task._id}`)} key={task._id} className="sm:max-w-[340px] flex flex-col gap-2 bg-white rounded py-2 px-4">
-            <h3 className="text-[14px] sm:text-[15px]">{task.title}</h3>
+            <div className="flex w-full justify-between items-center">
+            <h3 className="text-[14px] sm:text-[15px]">{task.title}</h3> <RiEdit2Fill className="w-4 h-4" /> </div>
             <p className="text-[11px]">{task.description}</p>
             <div className="flex items-center justify-between">
             <div className={`py-0.5 px-1.5 ${task.priority === 'High' ? 'bg-red-200' : task.priority === 'Medium' ? 'bg-yellow-200' : 'bg-green-300' } rounded-md`}>

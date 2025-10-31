@@ -1,7 +1,7 @@
 import React from "react"
 
 const AppContext = React.createContext({
-    url: '', token: ''
+    url: '', token: '', updateToken:() => {}
 })
 
 export default AppContext

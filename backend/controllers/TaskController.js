@@ -102,12 +102,14 @@ const getSummary = async (req, res) => {
         const openTaskList = tasks.filter(task => task.status === 'Open')
         const openTasks = openTaskList.length
 
+        console.log('get summary',openTaskList)
+
         let taskByPriority = {
             High: 0, Medium: 0, Low: 0
         }
         openTaskList.forEach(task => {
             if (task.priority in taskByPriority) {
-                console.log('summaery',task)
+                
                 taskByPriority[task.priority] += 1
             }
         });
