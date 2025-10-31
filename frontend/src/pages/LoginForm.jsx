@@ -81,16 +81,19 @@ export default function LoginForm() {
                 <form onSubmit={submitForm} className='flex flex-col gap-3 min-w-[250px]'>
                     {!login && <div className='flex flex-col gap-1'>
                         <label className='text-sm text-gray-600'>Name</label>
-                        <input value={userInfo.name} name="name" onChange={handleInfo} type="text" className='py-2 px-4 text-sm text-gray-500 rounded-md border border-gray-500 outline-0' placeholder='Enter your full name' />
+                        <input value={userInfo.name} name="name" onChange={handleInfo} type="text" className='py-2 px-4 text-sm text-gray-500 rounded-md border border-gray-500 outline-0' 
+                            placeholder='Eg: Arun Jacob' />
                     </div>}
                     <div className='flex flex-col gap-1'>
                         <label className='text-sm text-gray-600'>Email</label>
-                        <input value={userInfo.email} name="email" onChange={handleInfo} type="email" className='py-2 px-4 text-sm text-gray-500 rounded-md border border-gray-500 outline-0' placeholder='Enter your Email ' />
+                        <input value={userInfo.email} name="email" onChange={handleInfo} type="email" className='py-2 px-4 text-sm text-gray-500 rounded-md border border-gray-500 outline-0' 
+                            placeholder='Eg: arunjacob@gmail.com ' />
                     </div>
 
                     <div className='flex flex-col gap-1'>
                         <label className='text-sm text-gray-600'>Password</label>
-                        <input value={userInfo.password} name="password" onChange={handleInfo} type="password" className='py-2 px-4 text-sm text-gray-500 rounded-md border border-gray-500 outline-0' placeholder='Enter your password' />
+                        <input value={userInfo.password} name="password" onChange={handleInfo} type="password" className='py-2 px-4 text-sm text-gray-500 rounded-md border border-gray-500 outline-0' 
+                            placeholder='Eg: arunjacob' />
                     </div>
                     <button type="submit" className='cursor-pointer rounded py-1 px-4 border-0 text-md outline-0 bg-blue-500 text-white font-medium'>
                         {buttonText}
